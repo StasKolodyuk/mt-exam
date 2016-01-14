@@ -65,7 +65,7 @@ public class Runner {
 			writer.println("-- №2-3 -- Вычисление First1 ---------------------------------------------------------------------------");
 			FirstFunctionComputer firstFunctionComputer = new FirstFunctionComputer(grammar);
 			int j = 1;
-			StringBuilder firstsStringBuilder = new StringBuilder("Computation First1 function for all of the non-terminal symbols of the grammar. \r\n");
+			StringBuilder firstsStringBuilder = new StringBuilder("Computation First1 function for all of the non-terminal symbols of the grammar. " + System.lineSeparator());
 			while (!firstFunctionComputer.isComputationComplete()) {
 				Map<NonTerminalSymbol, Set<TerminalSymbol>> currentFirstValues = firstFunctionComputer.nextIteration(); 
 				firstsStringBuilder.append("Iteration ").append(j++).append(": ");
@@ -73,20 +73,20 @@ public class Runner {
 					firstsStringBuilder.append("First1(").append(nonTerminalSymbol).append(") = ")
 						.append(currentFirstValues.get(nonTerminalSymbol)).append("; ");
 				}
-				firstsStringBuilder.append("\r\n");
+				firstsStringBuilder.append(System.lineSeparator());
 			}
-			firstsStringBuilder.append("\r\nResult for First1 function:\r\n");
+			firstsStringBuilder.append(System.lineSeparator() + "Result for First1 function:" + System.lineSeparator());
 			for (NonTerminalSymbol nonTerminalSymbol : firstFunctionComputer.getResult().keySet()) {
 				firstsStringBuilder.append("First1(").append(nonTerminalSymbol).append(") = ")
 					.append(firstFunctionComputer.getResult().get(nonTerminalSymbol)).append("; ");
 			}
-			firstsStringBuilder.append("\r\n");
+			firstsStringBuilder.append(System.lineSeparator());
 			writer.println(firstsStringBuilder);
 			
 			writer.println("------- Follow1  -------------------------------------------------------");
 			FollowFunctionComputor followFunctionComputor = new FollowFunctionComputor(grammar, firstFunctionComputer);
 			j = 1;
-			StringBuilder followssStringBuilder = new StringBuilder("Computation Follow1 function for all of the non-terminal symbols of the grammar. \r\n");
+			StringBuilder followssStringBuilder = new StringBuilder("Computation Follow1 function for all of the non-terminal symbols of the grammar. " + System.lineSeparator());
 			while (!followFunctionComputor.isComputationComplete()) {
 				Map<NonTerminalSymbol, Set<TerminalSymbol>> currentFirstValues = followFunctionComputor.nextIteration(); 
 				followssStringBuilder.append("Iteration ").append(j++).append(": ");
@@ -94,14 +94,14 @@ public class Runner {
 					followssStringBuilder.append("Follow(").append(nonTerminalSymbol).append(") = ")
 						.append(currentFirstValues.get(nonTerminalSymbol)).append("; ");
 				}
-				followssStringBuilder.append("\r\n");
+				followssStringBuilder.append(System.lineSeparator());
 			}
-			followssStringBuilder.append("\r\nResult for Follow1 function:\r\n");
+			followssStringBuilder.append(System.lineSeparator() + "Result for Follow1 function:" + System.lineSeparator());
 			for (NonTerminalSymbol nonTerminalSymbol : followFunctionComputor.getResult().keySet()) {
 				followssStringBuilder.append("Follow1(").append(nonTerminalSymbol).append(") = ")
 					.append(followFunctionComputor.getResult().get(nonTerminalSymbol)).append("; ");
 			}
-			followssStringBuilder.append("\r\n");
+			followssStringBuilder.append(System.lineSeparator());
 			writer.println(followssStringBuilder);
 	
 			writer.println("-- №4a -- Вычисление начального состояния q0 ------------------------------------------------------------");
@@ -119,10 +119,8 @@ public class Runner {
 			writer.println("-- №5 -- Проверка состояний на противоречивость (определение в документе Рябого №5) ---------------------");
 			statesAccumulator.performStatesTest();
 			
-			writer.println("-- №6 -- Таблица для функции f --------------------------------------------------------------------------\r\n");
+			writer.println("-- №6 -- Таблица для функции f --------------------------------------------------------------------------" + System.lineSeparator());
 			statesAccumulator.printFTable();
-
-            System.out.println(stringWriter.toString());
 
             writer.close();
 			

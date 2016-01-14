@@ -1,5 +1,6 @@
 package by.pachkovsky.mt.model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -119,7 +120,7 @@ public class Grammar {
 			grammarStringBuilder.append("Грамматика G = (N = ")
 				.append(this.getAllNonTerminalSymbols()).append(", Σ = ")
 				.append(this.getAllTerminalSymbols()).append(", P, ")
-				.append(this.axiom).append("), ").append("аксиома '").append(this.axiom).append("'\r\n");
+				.append(this.axiom).append("), ").append("аксиома '").append(this.axiom).append("'" + System.lineSeparator());
 		} else {
 			Set<NonTerminalSymbol> nonTerminalsWithoutAxiom = new TreeSet<NonTerminalSymbol>(this.getAllNonTerminalSymbols());
 			nonTerminalsWithoutAxiom.remove(this.axiom);
@@ -129,7 +130,7 @@ public class Grammar {
 				.append(this.getAllTerminalSymbols()).append(", P U ").append("[")
 				.append(Rule.of(this.axiom, this.getRules().get(this.axiom)))						
 				.append("], ")
-				.append(this.axiom).append("), ").append("аксилма '").append(this.axiom).append("'\r\n");
+				.append(this.axiom).append("), ").append("аксилма '").append(this.axiom).append("'" + System.lineSeparator());
 		}
 		return grammarStringBuilder.toString();
 	}
@@ -137,18 +138,18 @@ public class Grammar {
 
 	@Override
 	public String toString() {
-		StringBuilder grammarStringBuilder = new StringBuilder(this.toStringWithoutRules()).append("Множество правил P:\r\n");		
+		StringBuilder grammarStringBuilder = new StringBuilder(this.toStringWithoutRules()).append("Множество правил P:" + System.lineSeparator());
 		for (Map.Entry<NonTerminalSymbol, List<Chain>> entry : rules.entrySet()) {
-			grammarStringBuilder.append(Rule.of(entry)).append("\r\n");
+			grammarStringBuilder.append(Rule.of(entry)).append(System.lineSeparator());
 		}
 		return grammarStringBuilder.toString();
 	}
 	
 	public String toStringWithRulesEnumerated() {
-		StringBuilder grammarStringBuilder = new StringBuilder(this.toStringWithoutRules()).append("Пронумерованный список правил из P:\r\n");
+		StringBuilder grammarStringBuilder = new StringBuilder(this.toStringWithoutRules()).append("Пронумерованный список правил из P:" + System.lineSeparator());
 		List<Rule> enumeratedRules = this.getEnumeratedRules();
 		for (int i = 0; i < enumeratedRules.size(); i++) {
-			grammarStringBuilder.append(i).append(": ").append(enumeratedRules.get(i)).append("\r\n");
+			grammarStringBuilder.append(i).append(": ").append(enumeratedRules.get(i)).append(System.lineSeparator());
 		}
 		return grammarStringBuilder.toString();
 	}

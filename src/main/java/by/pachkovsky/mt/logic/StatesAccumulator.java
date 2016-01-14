@@ -1,6 +1,6 @@
 package by.pachkovsky.mt.logic;
 
-import java.io.PrintStream;
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -67,7 +67,7 @@ public class StatesAccumulator {
 		writer.print("q0 = <" + grammar.getInitialSituation() + "> = ");
 		Set<Situation> startState = closureComputer.closure(grammar.getInitialSituation());
 		writer.println(startState);
-		writer.println("\r\n");
+		writer.println(System.lineSeparator());
 		this.states.add(startState);
 		this.nonObservedStates.add(startState);
 		this.g.add(new TreeMap<Symbol, Integer>());
@@ -90,7 +90,7 @@ public class StatesAccumulator {
 	}
 	
 	public void computeStates() {
-		StringBuilder builder = new StringBuilder("Изначально имеем\r\n").append(this.getPrettyStringStatesRepresentation()).append("\r\n\r\n");
+		StringBuilder builder = new StringBuilder("Изначально имеем" + System.lineSeparator()).append(this.getPrettyStringStatesRepresentation()).append(System.lineSeparator() + System.lineSeparator());
 		
 		int iteration = 1;
 		while (!nonObservedStates.isEmpty()) {
@@ -109,11 +109,11 @@ public class StatesAccumulator {
 					builder.append("Извлекаем пусто состояние []");
 				}
 				
-				builder.append(" из O и включаем в C, получаем: \r\n");
-				builder.append(this.getPrettyStringStatesRepresentation()).append("\r\n");
+				builder.append(" из O и включаем в C, получаем: " + System.lineSeparator());
+				builder.append(this.getPrettyStringStatesRepresentation()).append(System.lineSeparator());
 				
 				for (Symbol symbol : this.grammar.getAllSymbolsWithoutAxiom()) {
-					Set<Situation> muedSituations = closureComputer.mu(currentState, symbol); 
+					Set<Situation> muedSituations = closureComputer.mu(currentState, symbol);
 					builder.append("g(q").append(stateIndex).append(", ").append(symbol).append(") = <mu(q")
 						.append(stateIndex).append(", ").append(symbol).append(")> = ")
 						.append("<").append(muedSituations).append(">");
@@ -160,16 +160,16 @@ public class StatesAccumulator {
 						//emptyState = newState;
 						builder.append(" (пустое состояние)");
 					}
-					builder.append("\r\n");
+					builder.append(System.lineSeparator());
 					
 				}
-				builder.append("В итоге имеем:\r\n").append(this.getPrettyStringStatesRepresentation()).append("\r\n\r\n");
+				builder.append("В итоге имеем:" + System.lineSeparator()).append(this.getPrettyStringStatesRepresentation()).append(System.lineSeparator() + System.lineSeparator());
 				writer.println(builder);
 				builder = new StringBuilder();
 				
 			}
 		}
-		builder.append("Множество O пусто, заканчиваем вычисление состояний.\r\n");
+		builder.append("Множество O пусто, заканчиваем вычисление состояний." + System.lineSeparator());
 		writer.println(builder);		
 	}
 	
@@ -209,13 +209,13 @@ public class StatesAccumulator {
 	}
 	
 	public void printStateList() {
-		StringBuilder builder = new StringBuilder("Список состояний:\r\n");
+		StringBuilder builder = new StringBuilder("Список состояний:" + System.lineSeparator());
 		int i = 0;
 		for (Set<Situation> state : this.states) {
-			builder.append("q").append(i++).append(" = ").append(state).append("\r\n");
+			builder.append("q").append(i++).append(" = ").append(state).append(System.lineSeparator());
 		}
 		if (this.emptyStateGained) {
-			builder.append("[]\r\n");
+			builder.append("[]" + System.lineSeparator());
 		}
 		this.writer.println(builder);
 	}
@@ -259,7 +259,7 @@ public class StatesAccumulator {
 		int i = 0;
 		for (Set<Situation> state : this.states) {
 			boolean testFailed = testStateFailed(state); 
-			builder.append("Тест для q").append(i++).append(": ").append(testFailed ? "fail - shit happens :(" : "ok").append("\r\n");
+			builder.append("Тест для q").append(i++).append(": ").append(testFailed ? "fail - shit happens :(" : "ok").append(System.lineSeparator());
 			generalTestSuccesed |= testFailed;
 		}
 		writer.println(builder);
@@ -273,7 +273,7 @@ public class StatesAccumulator {
 		for (Symbol symbol : symbols) {
 			builder.append(String.format("%10s|", symbol.toString()));
 		}
-		builder.append("\r\n------------------------------------------------------------------------\r\n");
+		builder.append(System.lineSeparator() + "------------------------------------------------------------------------" + System.lineSeparator());
 		
 		int i = 0;
 		for (Map<Symbol, Integer> gmap : this.g) {
@@ -281,7 +281,7 @@ public class StatesAccumulator {
 			for (Symbol symbol : symbols) {
 				builder.append(String.format("%10s|", (gmap.get(symbol) != null) ? gmap.get(symbol).toString() : "[]"));
 			}
-			builder.append("\r\n");
+			builder.append(System.lineSeparator());
 		}
 		
 		writer.println(builder);
@@ -295,7 +295,7 @@ public class StatesAccumulator {
 		for (TerminalSymbol symbol : symbols) {
 			builder.append(String.format("%15s|", symbol.toString()));
 		}
-		builder.append("\r\n------------------------------------------------------------------------\r\n");
+		builder.append(System.lineSeparator() + "------------------------------------------------------------------------" + System.lineSeparator());
 		
 		int i = 0;
 		for (Map<TerminalSymbol, Integer> fmap : this.f) {
@@ -314,7 +314,7 @@ public class StatesAccumulator {
 				
 				builder.append(String.format("%15s|", s));
 			}
-			builder.append("\r\n");
+			builder.append(System.lineSeparator());
 		}
 		
 		writer.println(builder);

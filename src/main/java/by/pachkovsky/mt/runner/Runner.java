@@ -37,14 +37,18 @@ public class Runner {
 //				builder.addRule(rule);
 //			}			
 //			Grammar grammar = builder.constructGrammar(rules.get(0).getNonTerminalSymbol());
-			
-			Reader reader = new FileReader(INPUT_FILENAME);
+
+            if(args.length != 2) {
+                throw new RuntimeException("Wrong Input Parameters");
+            }
+
+			Reader reader = new FileReader(args[0]);
 			Grammar grammar = GrammarParser.parseGrammar(reader);
 			reader.close();
 			
 
-            StringWriter stringWriter = new StringWriter();
-			PrintWriter writer = new PrintWriter(stringWriter);
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(
+                    new FileOutputStream(args[1]), "UTF-8"));
 
 			writer.println("Замечание: в [...] обозначается множество, в <...> обозначается замыкание.");
 			writer.println(new Date());
